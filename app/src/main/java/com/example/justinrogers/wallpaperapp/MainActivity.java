@@ -1,17 +1,46 @@
 package com.example.justinrogers.wallpaperapp;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    ListView listView;
+    String[] text = {"img1", "img2", "img3", "img4", "img5", "img6"};
+    Integer[] imgValues = {
+            R.drawable.img0001,
+            R.drawable.img0002,
+            R.drawable.img0003,
+            R.drawable.img0004,
+            R.drawable.img0005,
+            R.drawable.img0006
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CustomList adapter = new
+                CustomList(MainActivity.this, text, imgValues);
+        listView = (ListView) findViewById(R.id.list);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(MainActivity.this, "You Clicked at " + text[+position], Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
