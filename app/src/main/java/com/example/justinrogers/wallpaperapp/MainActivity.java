@@ -13,8 +13,15 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity {
 
     ListView listView;
-    String[] text = {"img1", "img2", "img3", "img4", "img5", "img6"};
+    String[] text = {"img1", "img2", "img3", "img4", "img5", "img6",
+            "img1", "img2", "img3", "img4", "img5", "img6"};
     Integer[] imgValues = {
+            R.drawable.img0001,
+            R.drawable.img0002,
+            R.drawable.img0003,
+            R.drawable.img0004,
+            R.drawable.img0005,
+            R.drawable.img0006,
             R.drawable.img0001,
             R.drawable.img0002,
             R.drawable.img0003,
