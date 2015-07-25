@@ -1,53 +1,30 @@
 package com.example.justinrogers.wallpaperapp;
 
+import android.app.WallpaperManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    ListView listView;
-    String[] text = {"img1", "img2", "img3", "img4", "img5", "img6",
-            "img1", "img2", "img3", "img4", "img5", "img6"};
-    Integer[] imgValues = {
-            R.drawable.img0001,
-            R.drawable.img0002,
-            R.drawable.img0003,
-            R.drawable.img0004,
-            R.drawable.img0005,
-            R.drawable.img0006,
-            R.drawable.img0001,
-            R.drawable.img0002,
-            R.drawable.img0003,
-            R.drawable.img0004,
-            R.drawable.img0005,
-            R.drawable.img0006
-    };
-
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CustomList adapter = new
-                CustomList(MainActivity.this, text, imgValues);
-        listView = (ListView) findViewById(R.id.list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(MainActivity.this, "You Clicked at " + text[+position], Toast.LENGTH_SHORT).show();
-
-            }
-        });
+            ImageView imageView = (ImageView)findViewById(R.id.imageView);
+            WallpaperManager wallMan = WallpaperManager.getInstance(this);
+            imageView.setImageDrawable(wallMan.getDrawable());
     }
 
     @Override
@@ -70,5 +47,24 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void selectImage(View view)
+    {
+        Intent intent = new Intent(this, SelectImageActivity.class);
+        startActivity(intent);
+    }
+
+    public void clearWallpaper(View view)
+    {
+        WallpaperManager wallMan = WallpaperManager.getInstance(this);
+        try
+        {
+            wallMan.clear();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
