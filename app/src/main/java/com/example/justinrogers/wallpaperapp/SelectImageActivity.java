@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class SelectImageActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_image);
 
-        CustomList adapter = new
+        final CustomList adapter = new
                 CustomList(SelectImageActivity.this, text, imgValues);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
@@ -45,6 +46,8 @@ public class SelectImageActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Toast.makeText(SelectImageActivity.this, "You Clicked at " + text[+position], Toast.LENGTH_SHORT).show();
+                ImageView imageView = (ImageView)findViewById(R.id.imageView2);
+
 
             }
         });
