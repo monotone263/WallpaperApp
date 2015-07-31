@@ -2,12 +2,16 @@ package com.example.justinrogers.wallpaperapp;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -45,8 +49,22 @@ public class SelectImageActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(SelectImageActivity.this, "You Clicked at " + text[+position], Toast.LENGTH_SHORT).show();
-                ImageView imageView = (ImageView)findViewById(R.id.imageView2);
+                //Toast.makeText(SelectImageActivity.this, "You Clicked at " + text[+position], Toast.LENGTH_SHORT).show();
+               // ImageView imageView = (ImageView)findViewById(R.id.imageView2);
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.toast,
+                        (ViewGroup) findViewById(R.id.toast_layout_root));
+
+                ImageView image = (ImageView) layout.findViewById(R.id.image);
+                image.setImageResource(R.drawable.img0001);
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText("Hello! This is a custom toast!");
+
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
 
 
             }
