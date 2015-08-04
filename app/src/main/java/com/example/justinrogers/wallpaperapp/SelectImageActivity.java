@@ -1,5 +1,8 @@
 package com.example.justinrogers.wallpaperapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -51,7 +54,7 @@ public class SelectImageActivity extends ActionBarActivity {
                                     int position, long id) {
                 //Toast.makeText(SelectImageActivity.this, "You Clicked at " + text[+position], Toast.LENGTH_SHORT).show();
                // ImageView imageView = (ImageView)findViewById(R.id.imageView2);
-                LayoutInflater inflater = getLayoutInflater();
+                /*LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.toast,
                         (ViewGroup) findViewById(R.id.toast_layout_root));
 
@@ -64,7 +67,9 @@ public class SelectImageActivity extends ActionBarActivity {
                 toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                 toast.setDuration(Toast.LENGTH_LONG);
                 toast.setView(layout);
-                toast.show();
+                toast.show();*/
+               // listView.getItemIdAtPosition(position);
+                showPopup(view);
 
 
             }
@@ -91,5 +96,24 @@ public class SelectImageActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showPopup(View view)
+    {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Set Wallpaper");
+        alertDialog.setMessage("Are you sure you want set this as the Wallpaper?");
+        alertDialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // continue with delete
+            }
+        });
+        alertDialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // do nothing
+            }
+        });
+        alertDialog.setIcon(R.drawable.img0005);
+        alertDialog.show();
     }
 }
