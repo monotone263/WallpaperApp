@@ -2,9 +2,11 @@ package com.example.justinrogers.wallpaperapp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,12 +19,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
+
 
 public class SelectImageActivity extends ActionBarActivity {
 
     ListView listView;
-    String[] text = {"img1", "img2", "img3", "img4", "img5", "img6",
-            "img1", "img2", "img3", "img4", "img5", "img6"};
+    String[] text = {"img0001", "img0002", "img0003", "img0004", "img0005", "img0006",
+            "img0001", "img0002", "img0003", "img0004", "img0005", "img0006"};
     Integer[] imgValues = {
             R.drawable.img0001,
             R.drawable.img0002,
@@ -52,26 +56,11 @@ public class SelectImageActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                //Toast.makeText(SelectImageActivity.this, "You Clicked at " + text[+position], Toast.LENGTH_SHORT).show();
-               // ImageView imageView = (ImageView)findViewById(R.id.imageView2);
-                /*LayoutInflater inflater = getLayoutInflater();
-                View layout = inflater.inflate(R.layout.toast,
-                        (ViewGroup) findViewById(R.id.toast_layout_root));
 
-                ImageView image = (ImageView) layout.findViewById(R.id.image);
-                image.setImageResource(R.drawable.img0001);
-                TextView text = (TextView) layout.findViewById(R.id.text);
-                text.setText("Hello! This is a custom toast!");
-
-                Toast toast = new Toast(getApplicationContext());
-                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                toast.setDuration(Toast.LENGTH_LONG);
-                toast.setView(layout);
-                toast.show();*/
-               // listView.getItemIdAtPosition(position);
-                showPopup(view);
-
-
+                String tempValue = (String) parent.getItemAtPosition(position);
+                String temp2 = view.toString();
+                Log.d("LSTV", "the value from the list is " + tempValue + ", " + temp2);
+                showPopup(view, tempValue);
             }
         });
     }
@@ -98,8 +87,15 @@ public class SelectImageActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showPopup(View view)
+    public void showPopup(View view, String selectedValue)
     {
+        ImageView image = new ImageView(this);
+        image.setBackgroundColor(Color.BLACK);
+        image.setPadding(5,5,5,5);
+        int picId = getResources().getIdentifier(selectedValue, "drawable", getApplicationContext().getPackageName());
+        image.setImageResource(picId);
+
+
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Set Wallpaper");
         alertDialog.setMessage("Are you sure you want set this as the Wallpaper?");
@@ -113,7 +109,9 @@ public class SelectImageActivity extends ActionBarActivity {
                 // do nothing
             }
         });
-        alertDialog.setIcon(R.drawable.img0005);
+        alertDialog.setView(image);
         alertDialog.show();
     }
+
+
 }
