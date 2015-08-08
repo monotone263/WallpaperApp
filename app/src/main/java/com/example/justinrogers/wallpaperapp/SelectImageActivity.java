@@ -1,6 +1,7 @@
 package com.example.justinrogers.wallpaperapp;
 
 import android.app.AlertDialog;
+import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -19,18 +20,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 
 
 public class SelectImageActivity extends ActionBarActivity {
 
     ListView listView;
-    String[] text = {"img0001", "img0002", "img0003", "img0004", "img0005", "img0006",
+    String[] text = {"img0008_thumb", "img0007_thumb", "img0004", "img0005", "img0006",
             "img0001", "img0002", "img0003", "img0004", "img0005", "img0006"};
     Integer[] imgValues = {
-            R.drawable.img0001,
-            R.drawable.img0002,
-            R.drawable.img0003,
+            R.drawable.img0008_thumb,
+            R.drawable.img0007_thumb,
             R.drawable.img0004,
             R.drawable.img0005,
             R.drawable.img0006,
@@ -89,11 +90,15 @@ public class SelectImageActivity extends ActionBarActivity {
 
     public void showPopup(View view, String selectedValue)
     {
+        final String inputValue = selectedValue;
+        final View inputView = view;
         ImageView image = new ImageView(this);
-        image.setBackgroundColor(Color.BLACK);
-        image.setPadding(5,5,5,5);
+        //image.setBackgroundColor(Color.BLACK);
+        image.setPadding(1,1,1,1);
         int picId = getResources().getIdentifier(selectedValue, "drawable", getApplicationContext().getPackageName());
         image.setImageResource(picId);
+
+        //image.setScaleX(5);
 
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -101,7 +106,13 @@ public class SelectImageActivity extends ActionBarActivity {
         alertDialog.setMessage("Are you sure you want set this as the Wallpaper?");
         alertDialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                // continue with delete
+                int wallpapperValue = getResources().getIdentifier(inputValue.substring(0, inputValue.length() - 6), "drawable", getApplicationContext().getPackageName());
+                WallpaperManager wallMan = WallpaperManager.getInstance(inputView.getContext());
+                try {
+                    wallMan.setResource(wallpapperValue);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         alertDialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
